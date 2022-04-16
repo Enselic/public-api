@@ -1,3 +1,3 @@
 fn main() {
-    println!("This project has been renamed to `cargo-public-api`, see https://github.com/Enselic/cargo-public-api")
+    println!("This project has been renamed to `public-api`, see https://github.com/Enselic/public-api")
 }

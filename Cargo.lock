@@ -4,4 +4,4 @@ version = 3
 
 [[package]]
 name = "public_items"
-version = "0.9.0"
+version = "0.9.1"
