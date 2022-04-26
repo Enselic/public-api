@@ -12,26 +12,27 @@ jobs:
 
   release:
     needs: verify
-    environment: crates.io
+    # environment: crates.io
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       # Try to cargo publish. If this succeeds we will tag the release.
-      - run: cargo publish
+      - run: cargo publish --dry-run
         env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+          CARGO_REGISTRY_TOKEN: REDACTED
 
       # Figure out what tag to use.
       - id: tag
         run: echo "::set-output name=NAME::v$(cargo read-manifest | jq .version)"
 
       # Push tag to git.
-      - run: |
-          git tag ${{ steps.tag.outputs.NAME }}
-          git push origin ${{ steps.tag.outputs.NAME }}
+      - name: git tag
+        run: |
+          echo git tag ${{ steps.tag.outputs.NAME }}
+          echo git push origin ${{ steps.tag.outputs.NAME }}
 
       # Create a GitHub Release from the tag.
       - uses: softprops/action-gh-release@1e07f43 # v0.1.14
         with:
-          tag_name: ${{ steps.tag.outputs.NAME }}
+          tag_name: v0.9.0 # ${{ steps.tag.outputs.NAME }}
